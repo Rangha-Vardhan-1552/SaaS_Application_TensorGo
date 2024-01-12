@@ -1,7 +1,19 @@
+import { BrowserRouter,Route,Routes } from "react-router-dom"
+import Home from "./pages/Home"
+import Signin from "./pages/Signin"
+import Signup from "./pages/Signup"
+import Profile from "./pages/Profile"
+import About from "./pages/About"
+// import Header from "./components/Header"
 export default function App() {
-  return (
-    <h1 className="text-3xl font-bold my-7  text-center text-slate-700">
-      Welcome to SaaS Application... @TensorGo
-    </h1>
-  )
+  return <BrowserRouter>
+  {/* <Header/> */}
+    <Routes>
+      <Route path="/" element={<Home/>}></Route>
+      <Route path="/signup" element={<Signup/>}></Route>
+      <Route path="/signin" element={<Signin/>}></Route>
+      <Route path="/profile" element={<Profile/>}></Route>
+      <Route path="/about" element={<About/>}></Route>
+    </Routes>
+  </BrowserRouter>
 }
