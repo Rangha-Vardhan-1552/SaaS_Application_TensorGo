@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, } from 'react-router-dom'
+import { signInFailure, signInStart, signInSuccess} from '../redux/user/userslice'
+import {useDispatch,useSelector} from 'react-redux'
+
 
 export default function SignIn() {
   const navigate= useNavigate()
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState({})
-  const [error, setError] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const {loading, error} = useSelector((state)=>state.user)
    const handleChange=(e)=>{
     setFormData({
       ...formData,
@@ -17,7 +20,7 @@ export default function SignIn() {
   const submitHandler= async(e)=>{
     e.preventDefault()
     try {
-      setLoading(true)
+      dispatch(signInStart())
       const response= await fetch('api/auth/signin',{
       method:'POST',
       headers:{
@@ -27,20 +30,17 @@ export default function SignIn() {
       })
       const result= await response.json()
       if (result.success===false){
-        setError(result.message)
-        setLoading(false)
+        dispatch(signInFailure(result.message))
         return;
       }
-      setLoading(false)
-      setError(null)
+     dispatch(signInSuccess(result))
       navigate('/')
         
     } catch (error) {
-      setError(error.message)
-      setLoading(false)
+      dispatch(signInFailure(error.message))
     }
   } 
-  console.log(error)
+
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl text-center font-semibold my-7'>Sign In</h1>
