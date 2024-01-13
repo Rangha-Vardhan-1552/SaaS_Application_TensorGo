@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 export default function Header() {
-    // const {currentUser}=useSelector(state=>state.user)
-    const currentUser=null
+    const {currentUser}=useSelector(state=>state.user)
 
   return (
     
@@ -35,7 +34,7 @@ export default function Header() {
                             <img  className='rounded-full w-7 h-7 object-cover' src={currentUser.avatar} alt='profile'/>
                         ):(
                             <li className=' text-slate-700 hover:underline'>SignIn</li>
-                        ) }
+                        )}
                         
                     </Link>
                     
